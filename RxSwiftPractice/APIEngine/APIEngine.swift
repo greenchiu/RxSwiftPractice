@@ -47,22 +47,9 @@ extension APIEngine {
         request.setValue("application/x-www-form-urlencoded", forHTTPHeaderField: "Content-Type")
         request.httpBody = KKBOX.authorizedPostData
         
-        let observable = session.rx.response(request: request)
-        return Completable.create(subscribe: { completable in
-            observable.subscribe(onNext: { _, data in
-                do {
-                    self.kkbox = try JSONDecoder().decode(KKBOX.self, from: data)
-                    completable(.completed)
-                }
-                catch {
-                    completable(.error(error))
-                }
-            }, onError: { error in
-                completable(.error(error))
-            }).disposed(by: self.disposeBag)
-            
-            return Disposables.create()
-        })
+        return response(request: request).do(onNext: { _, data in
+            self.kkbox = try JSONDecoder().decode(KKBOX.self, from: data)
+        }).ignoreElements()
     }
     
     func fetchFeaturedPlaylist(page: Int = 0) -> Single<([Playlist], Bool)> {
