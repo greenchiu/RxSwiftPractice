@@ -10,7 +10,9 @@ import Foundation
 import RxSwift
 import RxCocoa
 
-
+enum APIEngineError: Error {
+    case invalidResponse
+}
 
 private extension KKBOX {
     static let clientSecret = "e3eea435b0e83489972cc29d4e2f95cd"
@@ -56,27 +58,21 @@ extension APIEngine {
         let pageCount = 200
         var request = URLRequest(url: URL(string: "https://api.kkbox.com/v1.1/featured-playlists?territory=TW&offset=\(page * pageCount)&limit=\(pageCount)")!)
         request.allHTTPHeaderFields = self.kkbox?.apiHTTPHeaders
-        return Single.create(subscribe: { single in
-            self.session.rx.json(request: request).subscribe(onNext: { anyDictionary in
-                guard let dictionary = anyDictionary as? [String: Any] else {
-                    return
-                }
+        return session.rx.json(request: request)
+            .asSingle()
+            .map { dict in
                 guard
+                    let dictionary = dict as? [String: Any],
                     let data = dictionary["data"] as? [[String: Any]],
-                    let pagination = dictionary["paging"] as? [String: Any?] else {
-                    return
-                }
-                let playlists:[Playlist] = data.compactMap {
-                    try? Playlist(dictionary: $0)
+                    let pagination = dictionary["paging"] as? [String: Any?],
+                    let playlists = try? JSONDecoder().decode([Playlist].self, from: JSONSerialization.data(withJSONObject: data))
+                    else {
+                        throw APIEngineError.invalidResponse
                 }
                 
                 let nextPage: Bool = pagination["next"] != nil
-                single(.success((playlists, nextPage)))
-            }, onError: { error in
-                single(.error(error))
-            }).disposed(by: self.disposeBag)
-            return Disposables.create()
-        });
+                return (playlists, nextPage)
+            }
     }
 }
 
