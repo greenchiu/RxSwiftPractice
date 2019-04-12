@@ -37,7 +37,6 @@ class ViewController: UIViewController {
             .observeOn(MainScheduler.instance)
             .subscribe(onSuccess: { tuple in
                 print(tuple.0)
-                print(tuple.1)
             })
             .disposed(by: bag)
     }
