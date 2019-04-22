@@ -20,9 +20,9 @@ class SimpleRxViewModel {
     
     init() {
         
-//        loggedIn.asObservable()
-//            .flatMap(<#T##selector: (Bool) throws -> ObservableConvertibleType##(Bool) throws -> ObservableConvertibleType#>)
-        
+    }
+    
+    func startAuthorizing() {
         authorize()
             .subscribe(onCompleted: {
                 self.loggedIn.accept(true)
@@ -32,7 +32,7 @@ class SimpleRxViewModel {
             .disposed(by: bag)
     }
     
-    func authorize() -> Completable {
+    private func authorize() -> Completable {
         return api.authorizeKKBOX()
     }
     

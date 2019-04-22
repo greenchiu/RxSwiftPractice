@@ -33,7 +33,7 @@ class ViewController: UIViewController {
         }
         
         authorizedButton.rx.controlEvent(.touchUpInside)
-            .bind(onNext: self.simpleAuthorize)
+            .bind(onNext: self.viewModel.startAuthorizing)
             .disposed(by: bag)
 
         fetchPlaylistButton.setTitle("Playlists", for: .normal)
@@ -45,19 +45,21 @@ class ViewController: UIViewController {
             make.leading.equalTo(10)
         }
         fetchPlaylistButton.isHidden = true
-    }
-
-    func simpleAuthorize() {
-        viewModel.authorize()
+        
+        
+        viewModel.loggedIn
+            .asObservable()
             .observeOn(MainScheduler.instance)
-            .subscribe(onCompleted: {
-                self.authorizedButton.isHidden = true
-                self.fetchPlaylistButton.isHidden = false
-            }, onError: { _ in
-                
-            })
+            .subscribe { event in
+                guard let loggedIn = event.element else {
+                    return
+                }
+                self.authorizedButton.isHidden = loggedIn
+                self.fetchPlaylistButton.isHidden = !loggedIn
+            }
             .disposed(by: bag)
     }
+
 
     func fetchPlaylists() {
         APIEngine.shared.fetchFeaturedPlaylist(page: 0)
