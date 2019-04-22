@@ -73,8 +73,12 @@ extension APIEngine {
                         throw APIEngineError.invalidResponse
                 }
                 
-                let nextPage: Bool = pagination["next"] != nil
-                return (playlists, nextPage)
+                var hasNextPage = false
+                if let next = pagination["next"], let _ = next {
+                    print(next)
+                    hasNextPage = true
+                }
+                return (playlists, hasNextPage)
             }
     }
 }
