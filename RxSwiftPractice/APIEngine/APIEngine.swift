@@ -35,6 +35,8 @@ class APIEngine: NSObject {
     
     private var kkbox:KKBOX?
     
+    private(set) var loggedin: Bool = false
+    
     private override init() {}
     
     final internal func response( request: URLRequest ) -> Observable<(response: HTTPURLResponse, data: Data)> {
@@ -51,6 +53,7 @@ extension APIEngine {
         
         return response(request: request).do(onNext: { _, data in
             self.kkbox = try JSONDecoder().decode(KKBOX.self, from: data)
+            self.loggedin = true
         }).ignoreElements()
     }
     
