@@ -21,6 +21,8 @@
 		E67A8166225DC98100801D92 /* RxSwiftPracticeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E67A8165225DC98100801D92 /* RxSwiftPracticeTests.swift */; };
 		E67A8171225DD0E400801D92 /* APIEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = E67A8170225DD0E400801D92 /* APIEngine.swift */; };
 		E67A8173225DE54300801D92 /* KKBOX.swift in Sources */ = {isa = PBXBuildFile; fileRef = E67A8172225DE54300801D92 /* KKBOX.swift */; };
+		E6EF755A226E0CEA009198E7 /* PlaylistSongViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6EF7559226E0CEA009198E7 /* PlaylistSongViewModel.swift */; };
+		E6EF755C226E1703009198E7 /* PlaylistSongViewModelInputs.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6EF755B226E1703009198E7 /* PlaylistSongViewModelInputs.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -56,6 +58,8 @@
 		E67A8167225DC98100801D92 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		E67A8170225DD0E400801D92 /* APIEngine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = APIEngine.swift; path = APIEngine/APIEngine.swift; sourceTree = "<group>"; };
 		E67A8172225DE54300801D92 /* KKBOX.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = KKBOX.swift; path = KKBOX/KKBOX.swift; sourceTree = "<group>"; };
+		E6EF7559226E0CEA009198E7 /* PlaylistSongViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaylistSongViewModel.swift; sourceTree = "<group>"; };
+		E6EF755B226E1703009198E7 /* PlaylistSongViewModelInputs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaylistSongViewModelInputs.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -134,7 +138,7 @@
 				E67A8152225DC97F00801D92 /* ViewController.swift */,
 				E613CCF6226D60C700B31752 /* HomeViewModel.swift */,
 				E613CCF8226D988B00B31752 /* SimpleRxViewModel.swift */,
-				E613CCFA226DC89C00B31752 /* PlaylistSongsViewController.swift */,
+				E6EF7558226E0CCD009198E7 /* PlaylistSong */,
 				E67A8154225DC97F00801D92 /* Main.storyboard */,
 				E67A8157225DC98000801D92 /* Assets.xcassets */,
 				E67A8159225DC98000801D92 /* LaunchScreen.storyboard */,
@@ -152,6 +156,16 @@
 				E67A8167225DC98100801D92 /* Info.plist */,
 			);
 			path = RxSwiftPracticeTests;
+			sourceTree = "<group>";
+		};
+		E6EF7558226E0CCD009198E7 /* PlaylistSong */ = {
+			isa = PBXGroup;
+			children = (
+				E613CCFA226DC89C00B31752 /* PlaylistSongsViewController.swift */,
+				E6EF7559226E0CEA009198E7 /* PlaylistSongViewModel.swift */,
+				E6EF755B226E1703009198E7 /* PlaylistSongViewModelInputs.swift */,
+			);
+			path = PlaylistSong;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -331,7 +345,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E6EF755C226E1703009198E7 /* PlaylistSongViewModelInputs.swift in Sources */,
 				E67A8153225DC97F00801D92 /* ViewController.swift in Sources */,
+				E6EF755A226E0CEA009198E7 /* PlaylistSongViewModel.swift in Sources */,
 				E67A8173225DE54300801D92 /* KKBOX.swift in Sources */,
 				E67A8171225DD0E400801D92 /* APIEngine.swift in Sources */,
 				E613CCF7226D60C700B31752 /* HomeViewModel.swift in Sources */,
