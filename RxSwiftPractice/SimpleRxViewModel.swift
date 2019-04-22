@@ -14,7 +14,7 @@ class SimpleRxViewModel {
     private let bag = DisposeBag()
     private let api = APIEngine.shared
     private(set) var page = 0
-    private(set) var hasMore = true
+    private(set) var hasMore = false
     private var authorizeAction: Completable!
     
     let authorizedTrigger = PublishSubject<Void>()
@@ -54,6 +54,7 @@ class SimpleRxViewModel {
                 switch event {
                 case .completed:
                     self.loggedIn.accept(true)
+                    self.hasMore = true
                 default:
                     break
                 }
@@ -93,9 +94,7 @@ class SimpleRxViewModel {
     }
     
     private func fetchPlaylist() -> Single<[Playlist]> {
-        return Observable.of(page).filter { _ in
-                self.hasMore == true
-            }
+        return Observable.of(page)
             .do(onNext: { _ in
                 self.loading.accept(true)
             })

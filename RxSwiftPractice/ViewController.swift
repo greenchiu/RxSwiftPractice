@@ -26,6 +26,7 @@ class ViewController: UIViewController {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
         
+        view.backgroundColor = .white
         configurationUIs()
         setupBuildings()
     }
@@ -36,8 +37,8 @@ class ViewController: UIViewController {
         authorizedButton.setTitleColor(.black, for: .normal)
         view.addSubview(authorizedButton)
         authorizedButton.snp.makeConstraints { make in
-            make.size.equalTo(CGSize(width: 100, height: 20))
-            make.top.equalTo(60)
+            make.size.equalTo(CGSize(width: 100, height: 40))
+            make.top.equalTo(view.safeAreaLayoutGuide.snp.top)
             make.leading.equalTo(10)
         }
         
@@ -49,9 +50,7 @@ class ViewController: UIViewController {
         fetchPlaylistButton.setTitleColor(.black, for: .normal)
         view.addSubview(fetchPlaylistButton)
         fetchPlaylistButton.snp.makeConstraints { make in
-            make.size.equalTo(CGSize(width: 100, height: 20))
-            make.top.equalTo(60)
-            make.leading.equalTo(10)
+            make.edges.equalTo(authorizedButton)
         }
         fetchPlaylistButton.isHidden = true
         
