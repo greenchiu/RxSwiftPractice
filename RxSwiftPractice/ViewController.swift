@@ -68,27 +68,17 @@ class ViewController: UIViewController {
     
     func setupBuildings() {
         viewModel.loggedIn
-            .asObservable()
-            .observeOn(MainScheduler.instance)
-            .subscribe { event in
-                guard let loggedIn = event.element else {
-                    return
-                }
+            .asDriver(onErrorJustReturn: false)
+            .drive(onNext: { loggedIn in
                 self.authorizedButton.isHidden = loggedIn
                 self.fetchPlaylistButton.isHidden = !loggedIn
-            }
+            })
             .disposed(by: bag)
         
         viewModel.playlists
-            .asObservable()
-            .observeOn(MainScheduler.instance)
-            .subscribe({ event in
-                switch event {
-                case .next(_):
-                    self.tableview.reloadData()
-                default:
-                    print("event: \(event)")
-                }
+            .asDriver(onErrorJustReturn: [])
+            .drive(onNext: { _ in
+                self.tableview.reloadData()
             })
             .disposed(by: bag)
         
