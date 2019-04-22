@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		09FCFDC1C20A94DC8F0C4327 /* Pods_RxSwiftPractice.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C0F8CAEB28BE4682E0185724 /* Pods_RxSwiftPractice.framework */; };
 		41F10473622CCE8CA9086250 /* Pods_RxSwiftPracticeTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4AB9BEEE2BA3DF5EB22C2C80 /* Pods_RxSwiftPracticeTests.framework */; };
+		E613CCF7226D60C700B31752 /* HomeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E613CCF6226D60C700B31752 /* HomeViewModel.swift */; };
 		E67A8151225DC97F00801D92 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E67A8150225DC97F00801D92 /* AppDelegate.swift */; };
 		E67A8153225DC97F00801D92 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E67A8152225DC97F00801D92 /* ViewController.swift */; };
 		E67A8156225DC97F00801D92 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E67A8154225DC97F00801D92 /* Main.storyboard */; };
@@ -36,6 +37,7 @@
 		89AB7D2F52554C9F68632F7B /* Pods-RxSwiftPracticeTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RxSwiftPracticeTests.debug.xcconfig"; path = "Target Support Files/Pods-RxSwiftPracticeTests/Pods-RxSwiftPracticeTests.debug.xcconfig"; sourceTree = "<group>"; };
 		975D8F5454F794936F887189 /* Pods-RxSwiftPractice.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RxSwiftPractice.debug.xcconfig"; path = "Target Support Files/Pods-RxSwiftPractice/Pods-RxSwiftPractice.debug.xcconfig"; sourceTree = "<group>"; };
 		C0F8CAEB28BE4682E0185724 /* Pods_RxSwiftPractice.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_RxSwiftPractice.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		E613CCF6226D60C700B31752 /* HomeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewModel.swift; sourceTree = "<group>"; };
 		E67A814D225DC97F00801D92 /* RxSwiftPractice.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RxSwiftPractice.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E67A8150225DC97F00801D92 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		E67A8152225DC97F00801D92 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -115,6 +117,7 @@
 			children = (
 				E67A8150225DC97F00801D92 /* AppDelegate.swift */,
 				E67A8152225DC97F00801D92 /* ViewController.swift */,
+				E613CCF6226D60C700B31752 /* HomeViewModel.swift */,
 				E67A8154225DC97F00801D92 /* Main.storyboard */,
 				E67A8157225DC98000801D92 /* Assets.xcassets */,
 				E67A8159225DC98000801D92 /* LaunchScreen.storyboard */,
@@ -312,6 +315,7 @@
 				E67A8153225DC97F00801D92 /* ViewController.swift in Sources */,
 				E67A8173225DE54300801D92 /* KKBOX.swift in Sources */,
 				E67A8171225DD0E400801D92 /* APIEngine.swift in Sources */,
+				E613CCF7226D60C700B31752 /* HomeViewModel.swift in Sources */,
 				E67A8151225DC97F00801D92 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
