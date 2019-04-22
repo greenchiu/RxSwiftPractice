@@ -12,6 +12,7 @@
 		E613CCF7226D60C700B31752 /* HomeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E613CCF6226D60C700B31752 /* HomeViewModel.swift */; };
 		E613CCF9226D988B00B31752 /* SimpleRxViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E613CCF8226D988B00B31752 /* SimpleRxViewModel.swift */; };
 		E613CCFB226DC89C00B31752 /* PlaylistSongsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E613CCFA226DC89C00B31752 /* PlaylistSongsViewController.swift */; };
+		E613CCFE226DCB2500B31752 /* UIScrollView+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = E613CCFD226DCB2500B31752 /* UIScrollView+Rx.swift */; };
 		E67A8151225DC97F00801D92 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E67A8150225DC97F00801D92 /* AppDelegate.swift */; };
 		E67A8153225DC97F00801D92 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E67A8152225DC97F00801D92 /* ViewController.swift */; };
 		E67A8156225DC97F00801D92 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E67A8154225DC97F00801D92 /* Main.storyboard */; };
@@ -42,6 +43,7 @@
 		E613CCF6226D60C700B31752 /* HomeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewModel.swift; sourceTree = "<group>"; };
 		E613CCF8226D988B00B31752 /* SimpleRxViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SimpleRxViewModel.swift; sourceTree = "<group>"; };
 		E613CCFA226DC89C00B31752 /* PlaylistSongsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaylistSongsViewController.swift; sourceTree = "<group>"; };
+		E613CCFD226DCB2500B31752 /* UIScrollView+Rx.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIScrollView+Rx.swift"; sourceTree = "<group>"; };
 		E67A814D225DC97F00801D92 /* RxSwiftPractice.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RxSwiftPractice.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E67A8150225DC97F00801D92 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		E67A8152225DC97F00801D92 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -96,6 +98,14 @@
 			path = Pods;
 			sourceTree = "<group>";
 		};
+		E613CCFC226DCB0F00B31752 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				E613CCFD226DCB2500B31752 /* UIScrollView+Rx.swift */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
 		E67A8144225DC97F00801D92 = {
 			isa = PBXGroup;
 			children = (
@@ -119,6 +129,7 @@
 		E67A814F225DC97F00801D92 /* RxSwiftPractice */ = {
 			isa = PBXGroup;
 			children = (
+				E613CCFC226DCB0F00B31752 /* Extensions */,
 				E67A8150225DC97F00801D92 /* AppDelegate.swift */,
 				E67A8152225DC97F00801D92 /* ViewController.swift */,
 				E613CCF6226D60C700B31752 /* HomeViewModel.swift */,
@@ -325,6 +336,7 @@
 				E67A8171225DD0E400801D92 /* APIEngine.swift in Sources */,
 				E613CCF7226D60C700B31752 /* HomeViewModel.swift in Sources */,
 				E613CCF9226D988B00B31752 /* SimpleRxViewModel.swift in Sources */,
+				E613CCFE226DCB2500B31752 /* UIScrollView+Rx.swift in Sources */,
 				E67A8151225DC97F00801D92 /* AppDelegate.swift in Sources */,
 				E613CCFB226DC89C00B31752 /* PlaylistSongsViewController.swift in Sources */,
 			);

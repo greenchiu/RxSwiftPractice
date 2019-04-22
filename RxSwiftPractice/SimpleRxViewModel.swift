@@ -75,6 +75,9 @@ class SimpleRxViewModel {
     }
     
     func fetchMore() {
+        guard self.hasMore else {
+            return
+        }
         fetchPlaylist()
             .subscribe { event in
                 self.loading.accept(false)

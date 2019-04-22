@@ -66,6 +66,13 @@ class ViewController: UIViewController {
             make.leading.trailing.bottom.equalTo(view)
         }
         
+        tableview.rx.reachedBottom.asObservable()
+            .startWith(())
+            .subscribe(onNext: {
+                self.viewModel.fetchMore()
+            })
+            .disposed(by: bag)
+        
         loadingIndicator.hidesWhenStopped = true
         view.addSubview(loadingIndicator)
         loadingIndicator.snp.makeConstraints { make in
