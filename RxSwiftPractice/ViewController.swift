@@ -97,8 +97,10 @@ class ViewController: UIViewController {
         
         Observable.zip(tableview.rx.itemSelected, tableview.rx.modelSelected(Playlist.self))
             .bind { [weak self] indexPath, item in
-                print("\(indexPath.row)")
-                print("\(item)")
+                let vc = PlaylistSongsViewController()
+                vc.viewModel = PlaylistSongViewModel(playlistIdentifier: item.identifier)
+                vc.title = item.title
+                self?.navigationController?.pushViewController(vc, animated: true)
             }
             .disposed(by: bag)
         

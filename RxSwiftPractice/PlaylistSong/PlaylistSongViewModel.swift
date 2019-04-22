@@ -33,6 +33,8 @@ class PlaylistSongViewModel: PlaylistSongViewModelProtocols {
         .share(replay: 1)
         
         response
+            .catchErrorJustReturn([])
+            .debug("start fetch songs", trimOutput: true)
             .bind(to: songs)
             .disposed(by: bag)
         
@@ -40,6 +42,7 @@ class PlaylistSongViewModel: PlaylistSongViewModelProtocols {
         Observable.of(requests.map{_ in true},
                       response.map{_ in false})
             .merge()
+            .share(replay: 1)
             .bind(to: loading)
             .disposed(by: bag)
     }
