@@ -79,16 +79,16 @@ class ViewController: UIViewController {
         
         
         
-        let fetchPlaylistRequest = authrorizedRequest.asObservable().flatMap { _ in
-            APIEngine.shared.fetchFeaturedPlaylist()
-        }
-
-        fetchPlaylistRequest.map { (arg0) -> [Playlist] in
-            let (playlists, _) = arg0
-            return playlists
-        }
-        .bind(to: viewModel.result)
-        .disposed(by: bag)
+//        let fetchPlaylistRequest = authrorizedRequest.asObservable().flatMap { _ in
+//            APIEngine.shared.fetchFeaturedPlaylist()
+//        }
+//
+//        fetchPlaylistRequest.map { (arg0) -> [Playlist] in
+//            let (playlists, _) = arg0
+//            return playlists
+//        }
+//        .bind(to: viewModel.result)
+//        .disposed(by: bag)
     }
 
 
