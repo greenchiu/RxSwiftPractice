@@ -46,6 +46,22 @@ struct Artist: Codable {
     }
 }
 
+struct Album: Codable {
+    var identifier: String
+    var name: String
+    var url: String
+    var images: [ImageMetadata]
+    var artist: [Artist]
+    
+    enum CodingKeys: String, CodingKey {
+        case identifier = "id"
+        case name
+        case images
+        case url
+        case artist
+    }
+}
+
 struct Playlist: Codable {
     var identifier: String
     var title: String
@@ -69,52 +85,18 @@ extension Playlist {
     }
 }
 
-//"""
-//{
-//    "id": "Gr1u9_wJSVBLZejbWF",
-//    "name": "愛的燈火",
-//    "url": "https://event.kkbox.com/content/album/Gr1u9_wJSVBLZejbWF",
-//    "explicitness": false,
-//    "available_territories": [
-//    "TW",
-//    "HK",
-//    "SG",
-//    "MY"
-//    ],
-//    "release_date": "2017-07-26",
-//    "images": [
-//    {
-//    "height": 160,
-//    "width": 160,
-//    "url": "https://i.kfs.io/album/global/27491421,0v2/fit/160x160.jpg"
-//    },
-//    {
-//    "height": 500,
-//    "width": 500,
-//    "url": "https://i.kfs.io/album/global/27491421,0v2/fit/500x500.jpg"
-//    },
-//    {
-//    "height": 1000,
-//    "width": 1000,
-//    "url": "https://i.kfs.io/album/global/27491421,0v2/fit/1000x1000.jpg"
-//    }
-//    ],
-//    "artist": {
-//        "id": "KldNiwYxd1n-AYVOv6",
-//        "name": "朱海君",
-//        "url": "https://event.kkbox.com/content/artist/KldNiwYxd1n-AYVOv6",
-//        "images": [
-//        {
-//        "height": 160,
-//        "width": 160,
-//        "url": "https://i.kfs.io/artist/global/204079,0v2/fit/160x160.jpg"
-//        },
-//        {
-//        "height": 300,
-//        "width": 300,
-//        "url": "https://i.kfs.io/artist/global/204079,0v2/fit/300x300.jpg"
-//        }
-//        ]
-//    }
-//}
-//"""
+struct Song: Codable {
+    var identifier: String
+    var name: String
+    var duration: Double
+    var url: String
+    var album: [Album]
+    
+    enum CodingKeys: String, CodingKey {
+        case identifier = "id"
+        case name
+        case duration
+        case url
+        case album
+    }
+}

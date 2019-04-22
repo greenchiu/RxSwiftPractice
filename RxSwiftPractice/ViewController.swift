@@ -89,6 +89,13 @@ class ViewController: UIViewController {
             }
             .disposed(by: bag)
         
+        Observable.zip(tableview.rx.itemSelected, tableview.rx.modelSelected(Playlist.self))
+            .bind { [weak self] indexPath, item in
+                print("\(indexPath.row)")
+                print("\(item)")
+            }
+            .disposed(by: bag)
+        
         viewModel.loading
             .asDriver()
             .drive(loadingIndicator.rx.isAnimating)

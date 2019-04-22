@@ -45,6 +45,13 @@ class APIEngine: NSObject {
 }
 
 extension APIEngine {
+    
+    private func request(URLString: String) -> URLRequest {
+        var request = URLRequest(url: URL(string: URLString)!)
+        request.allHTTPHeaderFields = self.kkbox?.apiHTTPHeaders
+        return request
+    }
+    
     func authorizeKKBOX() -> Completable {
         var request = URLRequest(url: KKBOX.authorizedUrl)
         request.httpMethod = "POST"
@@ -59,9 +66,8 @@ extension APIEngine {
     
     func fetchFeaturedPlaylist(page: Int = 0) -> Single<([Playlist], Bool)> {
         let pageCount = 200
-        var request = URLRequest(url: URL(string: "https://api.kkbox.com/v1.1/featured-playlists?territory=TW&offset=\(page * pageCount)&limit=\(pageCount)")!)
-        request.allHTTPHeaderFields = self.kkbox?.apiHTTPHeaders
-        return session.rx.json(request: request)
+        let aRequest = request(URLString: "https://api.kkbox.com/v1.1/featured-playlists?territory=TW&offset=\(page * pageCount)&limit=\(pageCount)")
+        return session.rx.json(request: aRequest)
             .asSingle()
             .map { dict in
                 guard
@@ -75,10 +81,25 @@ extension APIEngine {
                 
                 var hasNextPage = false
                 if let next = pagination["next"], let _ = next {
-                    print(next)
                     hasNextPage = true
                 }
                 return (playlists, hasNextPage)
+            }
+    }
+    
+    func fetchFeaturedPlaylistDetial(with identifier: String) -> Single<[Song]> {
+        let aRequest = request(URLString: "https://api.kkbox.com/v1.1/shared-playlists/\(identifier)/tracks?territory=TW&offset=0&limit=500")
+        return session.rx.json(request: aRequest)
+            .asSingle()
+            .map { dict in
+                guard
+                    let dictionary = dict as? [String: Any],
+                    let data = dictionary["data"] as? [[String: Any]],
+                    let songs = try? JSONDecoder().decode([Song].self, from: JSONSerialization.data(withJSONObject: data))
+                    else {
+                        throw APIEngineError.invalidResponse
+                }
+                return songs
             }
     }
 }
