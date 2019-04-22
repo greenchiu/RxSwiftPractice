@@ -51,7 +51,7 @@ struct Album: Codable {
     var name: String
     var url: String
     var images: [ImageMetadata]
-    var artist: [Artist]
+    var artist: Artist
     
     enum CodingKeys: String, CodingKey {
         case identifier = "id"
@@ -90,7 +90,7 @@ struct Song: Codable {
     var name: String
     var duration: Double
     var url: String
-    var album: [Album]
+    var album: Album
     
     enum CodingKeys: String, CodingKey {
         case identifier = "id"

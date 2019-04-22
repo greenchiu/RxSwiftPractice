@@ -20,7 +20,7 @@ class PlaylistSongViewModel: PlaylistSongViewModelProtocols {
     let songs = BehaviorRelay<[Song]>(value: [])
     let loading = BehaviorRelay<Bool>(value: false)
     let trigger = PublishSubject<Void>()
-    
+    let error = BehaviorRelay<String>(value: "")
     
     init(playlistIdentifier: String) {
         
@@ -28,19 +28,27 @@ class PlaylistSongViewModel: PlaylistSongViewModelProtocols {
                         .share(replay: 1)
         
         let response = requests.flatMap { _ in
-            self.apiProvider.fetchFeaturedPlaylistDetial(with: playlistIdentifier)
-        }
-        .share(replay: 1)
+                self.apiProvider.fetchFeaturedPlaylistDetial(with: playlistIdentifier)
+            }
+            .catchError { error in
+                if error is APIEngineError {
+                    self.error.accept("ApiEngineError")
+                }
+                else {
+                    self.error.accept("Unknown Error")
+                }
+                return Observable.empty()
+            }
+            .share(replay: 1)
         
         response
-            .catchErrorJustReturn([])
-            .debug("start fetch songs", trimOutput: true)
             .bind(to: songs)
             .disposed(by: bag)
         
         
-        Observable.of(requests.map{_ in true},
-                      response.map{_ in false})
+        Observable.of(requests.map{ _ in true },
+                      response.map{ _ in false },
+                      error.map{ _ in false })
             .merge()
             .share(replay: 1)
             .bind(to: loading)

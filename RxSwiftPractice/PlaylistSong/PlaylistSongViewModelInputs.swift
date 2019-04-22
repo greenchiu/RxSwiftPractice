@@ -19,4 +19,5 @@ protocol PlaylistSongViewModelInputs {
 protocol PlaylistSongViewModelOutputs {
     var songs: BehaviorRelay<[Song]> { get }
     var loading: BehaviorRelay<Bool> { get }
+    var error: BehaviorRelay<String> { get }
 }
