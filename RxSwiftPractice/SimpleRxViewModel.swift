@@ -15,22 +15,59 @@ class SimpleRxViewModel {
     private let api = APIEngine.shared
     private(set) var page = 0
     private(set) var hasMore = true
+    private var authorizeAction: Completable!
+    
+    let authorizedTrigger = PublishSubject<Void>()
     
     let playlists = BehaviorRelay<[Playlist]>(value: [])
     let loggedIn = BehaviorRelay<Bool>(value: false)
+    let loading = BehaviorRelay<Bool>(value: false)
     
     init() {
         
+        let authorizedRequest = Observable.of(request())
+        
+        authorizeAction = authorizedRequest
+            .do(onNext: { _ in
+                self.loading.accept(true)
+            })
+            .flatMap { _ -> Completable in
+                return self.api.authorizeKKBOX()
+            }
+            .ignoreElements()
+        
+        // How to bind the request and reponse to `loading` ??
+        // If I add the observer here, it will execute the authorization flow immediately
+        // But I hope it could be trigger by the authorizedTrigger
+        // How can I approach it?
+//        Observable.merge(
+//            authorizedRequest.map{ _ in true},
+//            authorizeAction.asObservable().map { _ in false })
+//            .share(replay: 1)
+//            .bind(to: loading)
+//            .disposed(by: bag)
     }
     
     func startAuthorizing() {
-        authorize()
-            .subscribe(onCompleted: {
-                self.loggedIn.accept(true)
-            }, onError: { _ in
-                
-            })
+        authorizeAction
+            .subscribe { event in
+                switch event {
+                case .completed:
+                    self.loggedIn.accept(true)
+                default:
+                    break
+                }
+                self.loading.accept(false)
+            }
             .disposed(by: bag)
+    }
+    
+    private func request() -> Observable<Void> {
+        return loading
+                .asObservable()
+                .flatMap { _ in
+                    Observable.empty()
+                }
     }
     
     private func authorize() -> Completable {
@@ -39,13 +76,16 @@ class SimpleRxViewModel {
     
     func fetchMore() {
         fetchPlaylist()
-            .filter {
-                $0.count > 0
+            .subscribe { event in
+                self.loading.accept(false)
+                switch event {
+                case .success(let playlists):
+                    let newPlaylists = self.playlists.value + playlists
+                    self.playlists.accept(newPlaylists)
+                default:
+                    break
+                }
             }
-            .subscribe(onSuccess: {
-                let newPlaylists = self.playlists.value + $0
-                self.playlists.accept(newPlaylists)
-            })
             .disposed(by: bag)
     }
     
@@ -53,6 +93,9 @@ class SimpleRxViewModel {
         return Observable.of(page).filter { _ in
                 self.hasMore == true
             }
+            .do(onNext: { _ in
+                self.loading.accept(true)
+            })
             .flatMap { page -> Single<([Playlist], Bool)> in
                 self.api.fetchFeaturedPlaylist(page: page)
             }

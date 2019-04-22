@@ -19,6 +19,7 @@ class ViewController: UIViewController {
     let authorizedButton = UIButton(type: .custom)
     let fetchPlaylistButton = UIButton(type: .custom)
     
+    let loadingIndicator = UIActivityIndicatorView(style: .gray)
     let tableview = UITableView()
     
     override func viewDidLoad() {
@@ -58,11 +59,17 @@ class ViewController: UIViewController {
             .bind(onNext: viewModel.fetchMore)
             .disposed(by: bag)
         
-        tableview.dataSource = self
+        tableview.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
         view.addSubview(tableview)
         tableview.snp.makeConstraints { make in
             make.top.equalTo(fetchPlaylistButton.snp.bottom)
             make.leading.trailing.bottom.equalTo(view)
+        }
+        
+        loadingIndicator.hidesWhenStopped = true
+        view.addSubview(loadingIndicator)
+        loadingIndicator.snp.makeConstraints { make in
+            make.center.equalTo(view.center)
         }
     }
     
@@ -77,33 +84,16 @@ class ViewController: UIViewController {
         
         viewModel.playlists
             .asDriver(onErrorJustReturn: [])
-            .drive(onNext: { _ in
-                self.tableview.reloadData()
-            })
+            .drive(tableview.rx.items(cellIdentifier: "cell", cellType: UITableViewCell.self)) { row, model, cell in
+                cell.textLabel?.text = model.title
+            }
             .disposed(by: bag)
         
+        viewModel.loading
+            .asDriver()
+            .drive(loadingIndicator.rx.isAnimating)
+            .disposed(by: bag)
     }
     
-}
-
-extension ViewController: UITableViewDataSource {
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return viewModel.playlists.value.count
-    }
-    
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        var cell = tableView.dequeueReusableCell(withIdentifier: "cell")
-        
-        if cell == nil {
-            cell = UITableViewCell(style: .default, reuseIdentifier: "cell")
-        }
-        
-        guard let aCell = cell else { fatalError() }
-        
-        let playlist = viewModel.playlists.value[indexPath.row]
-        aCell.textLabel?.text = playlist.title
-        return aCell
-        
-    }
 }
 
