@@ -87,7 +87,7 @@ extension APIEngine {
             }
     }
     
-    func fetchFeaturedPlaylistDetial(with identifier: String) -> Single<[Song]> {
+    func fetchFeaturedPlaylistTracks(with identifier: String) -> Single<[Song]> {
         let aRequest = request(URLString: "https://api.kkbox.com/v1.1/shared-playlists/\(identifier)/tracks?territory=TW&offset=0&limit=500")
         return session.rx.json(request: aRequest)
             .asSingle()

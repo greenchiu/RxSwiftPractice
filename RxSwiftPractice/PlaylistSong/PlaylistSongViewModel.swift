@@ -28,7 +28,7 @@ class PlaylistSongViewModel: PlaylistSongViewModelProtocols {
                         .share(replay: 1)
         
         let response = requests.flatMap { _ in
-                self.apiProvider.fetchFeaturedPlaylistDetial(with: playlistIdentifier)
+                self.apiProvider.fetchFeaturedPlaylistTracks(with: playlistIdentifier)
             }
             .catchError { error in
                 if error is APIEngineError {

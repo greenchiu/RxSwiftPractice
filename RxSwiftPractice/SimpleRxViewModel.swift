@@ -15,7 +15,6 @@ class SimpleRxViewModel {
     private let api = APIEngine.shared
     private(set) var page = 0
     private(set) var hasMore = false
-    private var authorizeAction: Completable!
     
     let authorizedTrigger = PublishSubject<Void>()
     
@@ -54,17 +53,6 @@ class SimpleRxViewModel {
             }
             .disposed(by: bag)
         
-        
-        authorizeAction = authorizedRequest
-            .do(onNext: { _ in
-                self.loading.accept(true)
-            })
-            .flatMap { _ -> Completable in
-                return self.api.authorizeKKBOX()
-            }
-            .ignoreElements()
-        
-        
         let playlistRequest = fetchPlaylistRequest().share(replay: 1)
         
         let playlistResponse = playlistRequest.flatMap { page in
@@ -93,29 +81,6 @@ class SimpleRxViewModel {
             .share(replay: 1)
             .bind(to: loading)
             .disposed(by: bag)
-    }
-    
-    func startAuthorizing() {
-        authorizeAction
-            .subscribe { event in
-                switch event {
-                case .completed:
-                    self.loggedIn.accept(true)
-                    self.hasMore = true
-                default:
-                    break
-                }
-                self.loading.accept(false)
-            }
-            .disposed(by: bag)
-    }
-    
-    private func request() -> Observable<Void> {
-        return loading
-                .asObservable()
-                .flatMap { _ in
-                    Observable.empty()
-                }
     }
     
     private func authorize() -> Completable {
