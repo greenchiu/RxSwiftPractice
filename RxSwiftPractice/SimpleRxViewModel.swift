@@ -19,6 +19,7 @@ class SimpleRxViewModel {
     
     let authorizedTrigger = PublishSubject<Void>()
     
+    let loadPlaylistTrigger = PublishSubject<Void>()
     let playlists = BehaviorRelay<[Playlist]>(value: [])
     let loggedIn = BehaviorRelay<Bool>(value: false)
     let loading = BehaviorRelay<Bool>(value: false)
@@ -36,16 +37,41 @@ class SimpleRxViewModel {
             }
             .ignoreElements()
         
+        
+        let playlistRequest = fetchPlaylistRequest().share(replay: 1)
+        
+        let playlistResponse = playlistRequest.flatMap { page in
+            self.api.fetchFeaturedPlaylist(page: page)
+        }
+            .do(onNext: { argument in
+                let (_, hasMore) = argument
+                self.hasMore = hasMore
+                self.page += 1
+            })
+            .share(replay: 1)
+        
+        playlistResponse.map { [unowned self] argument in
+            let (newPlaylists, _) = argument
+            let finalPlaylists = self.playlists.value + newPlaylists
+            return finalPlaylists
+        }
+        .bind(to: playlists)
+        .disposed(by: bag)
+        
+        
+        
         // How to bind the request and reponse to `loading` ??
         // If I add the observer here, it will execute the authorization flow immediately
         // But I hope it could be trigger by the authorizedTrigger
         // How can I approach it?
-//        Observable.merge(
-//            authorizedRequest.map{ _ in true},
-//            authorizeAction.asObservable().map { _ in false })
-//            .share(replay: 1)
-//            .bind(to: loading)
-//            .disposed(by: bag)
+        Observable.merge(
+            authorizedRequest.map { _ in true },
+            playlistRequest.map { _ in true },
+            playlistResponse.map{ _ in false },
+            authorizeAction.asObservable().map { _ in false })
+            .share(replay: 1)
+            .bind(to: loading)
+            .disposed(by: bag)
     }
     
     func startAuthorizing() {
@@ -75,44 +101,16 @@ class SimpleRxViewModel {
         return api.authorizeKKBOX()
     }
     
-    func fetchMore() {
-        guard self.hasMore else {
-            return
-        }
-        fetchPlaylist()
-            .subscribe { event in
-                self.loading.accept(false)
-                switch event {
-                case .success(let playlists):
-                    let newPlaylists = self.playlists.value + playlists
-                    self.playlists.accept(newPlaylists)
-                default:
-                    break
+    private func fetchPlaylistRequest() -> Observable<Int> {
+        return loading
+            .asObservable()
+            .sample(loadPlaylistTrigger)
+            .filter { _ in self.hasMore }
+            .flatMap { isLoading -> Observable<Int> in
+                if isLoading {
+                    return Observable.empty()
                 }
+                return Observable.just(self.page)
             }
-            .disposed(by: bag)
-    }
-    
-    private func fetchPlaylist() -> Single<[Playlist]> {
-        return Observable.of(page)
-            .do(onNext: { _ in
-                self.loading.accept(true)
-            })
-            .flatMap { page -> Single<([Playlist], Bool)> in
-                self.api.fetchFeaturedPlaylist(page: page)
-            }
-            .do(onNext: { (argument) in
-                let (_, hasMore) = argument
-                if hasMore {
-                    self.page += 1
-                }
-                self.hasMore = hasMore
-            })
-            .asSingle()
-            .flatMap { (argument) -> Single<[Playlist]> in
-                let (playlists, _) = argument
-                return Single.just(playlists)
-            }
-            .catchErrorJustReturn([])
     }
 }

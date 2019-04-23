@@ -65,7 +65,7 @@ extension APIEngine {
     }
     
     func fetchFeaturedPlaylist(page: Int = 0) -> Single<([Playlist], Bool)> {
-        let pageCount = 200
+        let pageCount = 10
         let aRequest = request(URLString: "https://api.kkbox.com/v1.1/featured-playlists?territory=TW&offset=\(page * pageCount)&limit=\(pageCount)")
         return session.rx.json(request: aRequest)
             .asSingle()

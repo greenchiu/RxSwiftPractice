@@ -55,7 +55,8 @@ class ViewController: UIViewController {
         fetchPlaylistButton.isHidden = true
         
         fetchPlaylistButton.rx.controlEvent(.touchUpInside)
-            .bind(onNext: viewModel.fetchMore)
+            .asDriver()
+            .drive(viewModel.loadPlaylistTrigger)
             .disposed(by: bag)
         
         tableview.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
@@ -67,9 +68,8 @@ class ViewController: UIViewController {
         
         tableview.rx.reachedBottom.asObservable()
             .startWith(())
-            .subscribe(onNext: {
-                self.viewModel.fetchMore()
-            })
+            .asDriver(onErrorJustReturn: ())
+            .drive(viewModel.loadPlaylistTrigger)
             .disposed(by: bag)
         
         loadingIndicator.hidesWhenStopped = true
