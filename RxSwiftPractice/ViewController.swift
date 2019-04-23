@@ -43,7 +43,8 @@ class ViewController: UIViewController {
         }
         
         authorizedButton.rx.controlEvent(.touchUpInside)
-            .bind(onNext: viewModel.startAuthorizing)
+            .asDriver()
+            .drive(viewModel.authorizedTrigger)
             .disposed(by: bag)
         
         fetchPlaylistButton.setTitle("Playlists", for: .normal)

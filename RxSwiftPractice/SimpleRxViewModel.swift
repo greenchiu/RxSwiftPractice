@@ -26,7 +26,27 @@ class SimpleRxViewModel {
     
     init() {
         
-        let authorizedRequest = Observable.of(request())
+        let authorizedRequest = Observable.combineLatest(loading.asObservable(), loggedIn.asObservable())
+            .sample(authorizedTrigger)
+            .filter { isLoading, isLoggedIn in
+                return !isLoading && !isLoggedIn
+            }
+        
+        let authorizedResponse = authorizedRequest.flatMap { _ -> Completable in
+                self.api.authorizeKKBOX()
+            }
+        
+        authorizedResponse
+            .subscribe { event in
+                switch event {
+                case .completed:
+                    self.loggedIn.accept(true)
+                default:
+                    break
+                }
+            }
+            .disposed(by: bag)
+        
         
         authorizeAction = authorizedRequest
             .do(onNext: { _ in
@@ -68,7 +88,7 @@ class SimpleRxViewModel {
             authorizedRequest.map { _ in true },
             playlistRequest.map { _ in true },
             playlistResponse.map{ _ in false },
-            authorizeAction.asObservable().map { _ in false })
+            authorizedResponse.map { _ in false })
             .share(replay: 1)
             .bind(to: loading)
             .disposed(by: bag)
@@ -105,7 +125,7 @@ class SimpleRxViewModel {
         return loading
             .asObservable()
             .sample(loadPlaylistTrigger)
-            .filter { _ in self.hasMore }
+            .filter { _ in self.hasMore && self.loggedIn.value }
             .flatMap { isLoading -> Observable<Int> in
                 if isLoading {
                     return Observable.empty()
