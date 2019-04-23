@@ -32,18 +32,25 @@ class SimpleRxViewModel {
                 return !isLoading && !isLoggedIn
             }
         
-        let authorizedResponse = authorizedRequest.flatMap { _ -> Completable in
-                self.api.authorizeKKBOX()
+        let authorizedResponse = authorizedRequest
+            .flatMap { _ -> Completable in
+                self.api.authorizeKKBOX().do(onError: { _ in
+                    self.loading.accept(false)
+                    self.loggedIn.accept(false)
+                }, onCompleted:{
+                    self.hasMore = true
+                    self.loading.accept(false)
+                    self.loggedIn.accept(true)
+                })
             }
         
         authorizedResponse
-            .subscribe { event in
-                switch event {
-                case .completed:
-                    self.loggedIn.accept(true)
-                default:
-                    break
-                }
+            .subscribe { _ in
+                /*
+                 *  Do nothing. Actually, it doesn't work.
+                 *  Add this subscribe to invoke the do action at above flatMap clourse
+                 */
+                print("Hello guys, you can't see this message.")
             }
             .disposed(by: bag)
         
@@ -78,12 +85,6 @@ class SimpleRxViewModel {
         .bind(to: playlists)
         .disposed(by: bag)
         
-        
-        
-        // How to bind the request and reponse to `loading` ??
-        // If I add the observer here, it will execute the authorization flow immediately
-        // But I hope it could be trigger by the authorizedTrigger
-        // How can I approach it?
         Observable.merge(
             authorizedRequest.map { _ in true },
             playlistRequest.map { _ in true },
