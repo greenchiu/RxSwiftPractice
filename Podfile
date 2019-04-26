@@ -1,19 +1,26 @@
 # Uncomment the next line to define a global platform for your project
-# platform :ios, '9.0'
+platform :ios, '12.0'
 
-target 'RxSwiftPractice' do
-  # Comment the next line if you're not using Swift and don't want to use dynamic frameworks
+def base_pods
   use_frameworks!
-
-  # Pods for RxSwiftPractice
 
   pod 'RxSwift', '~> 4.5.0'
   pod 'RxCocoa', '~> 4.5.0'
+end
+
+target 'RxSwiftPractice' do
+  # Comment the next line if you're not using Swift and don't want to use dynamic frameworks
+  
+
+  # Pods for RxSwiftPractice
+  # inherit! :search_paths
+  base_pods
   pod 'SnapKit'
+end
 
-  target 'RxSwiftPracticeTests' do
+
+target 'RxSwiftPracticeTests' do
     inherit! :search_paths
-    # Pods for testing
-  end
-
+    base_pods
+    pod "RxNimble"
 end

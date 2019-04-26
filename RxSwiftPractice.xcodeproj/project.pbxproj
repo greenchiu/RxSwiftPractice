@@ -21,6 +21,7 @@
 		E67A8166225DC98100801D92 /* RxSwiftPracticeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E67A8165225DC98100801D92 /* RxSwiftPracticeTests.swift */; };
 		E67A8171225DD0E400801D92 /* APIEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = E67A8170225DD0E400801D92 /* APIEngine.swift */; };
 		E67A8173225DE54300801D92 /* KKBOX.swift in Sources */ = {isa = PBXBuildFile; fileRef = E67A8172225DE54300801D92 /* KKBOX.swift */; };
+		E6BA906122735DA300DCA325 /* APIEngineActionsProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6BA906022735DA300DCA325 /* APIEngineActionsProtocol.swift */; };
 		E6EF755A226E0CEA009198E7 /* PlaylistSongViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6EF7559226E0CEA009198E7 /* PlaylistSongViewModel.swift */; };
 		E6EF755C226E1703009198E7 /* PlaylistSongViewModelInputs.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6EF755B226E1703009198E7 /* PlaylistSongViewModelInputs.swift */; };
 /* End PBXBuildFile section */
@@ -56,8 +57,9 @@
 		E67A8161225DC98100801D92 /* RxSwiftPracticeTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = RxSwiftPracticeTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		E67A8165225DC98100801D92 /* RxSwiftPracticeTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RxSwiftPracticeTests.swift; sourceTree = "<group>"; };
 		E67A8167225DC98100801D92 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		E67A8170225DD0E400801D92 /* APIEngine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = APIEngine.swift; path = APIEngine/APIEngine.swift; sourceTree = "<group>"; };
+		E67A8170225DD0E400801D92 /* APIEngine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIEngine.swift; sourceTree = "<group>"; };
 		E67A8172225DE54300801D92 /* KKBOX.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = KKBOX.swift; path = KKBOX/KKBOX.swift; sourceTree = "<group>"; };
+		E6BA906022735DA300DCA325 /* APIEngineActionsProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIEngineActionsProtocol.swift; sourceTree = "<group>"; };
 		E6EF7559226E0CEA009198E7 /* PlaylistSongViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaylistSongViewModel.swift; sourceTree = "<group>"; };
 		E6EF755B226E1703009198E7 /* PlaylistSongViewModelInputs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaylistSongViewModelInputs.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -143,7 +145,7 @@
 				E67A8157225DC98000801D92 /* Assets.xcassets */,
 				E67A8159225DC98000801D92 /* LaunchScreen.storyboard */,
 				E67A815C225DC98000801D92 /* Info.plist */,
-				E67A8170225DD0E400801D92 /* APIEngine.swift */,
+				E6BA905F22735D7200DCA325 /* API */,
 				E67A8172225DE54300801D92 /* KKBOX.swift */,
 			);
 			path = RxSwiftPractice;
@@ -156,6 +158,15 @@
 				E67A8167225DC98100801D92 /* Info.plist */,
 			);
 			path = RxSwiftPracticeTests;
+			sourceTree = "<group>";
+		};
+		E6BA905F22735D7200DCA325 /* API */ = {
+			isa = PBXGroup;
+			children = (
+				E67A8170225DD0E400801D92 /* APIEngine.swift */,
+				E6BA906022735DA300DCA325 /* APIEngineActionsProtocol.swift */,
+			);
+			path = API;
 			sourceTree = "<group>";
 		};
 		E6EF7558226E0CCD009198E7 /* PlaylistSong */ = {
@@ -198,6 +209,7 @@
 				E67A815D225DC98100801D92 /* Sources */,
 				E67A815E225DC98100801D92 /* Frameworks */,
 				E67A815F225DC98100801D92 /* Resources */,
+				E317967D394A2F116A60A3E7 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -338,6 +350,36 @@
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-RxSwiftPractice/Pods-RxSwiftPractice-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
+		E317967D394A2F116A60A3E7 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-RxSwiftPracticeTests/Pods-RxSwiftPracticeTests-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/RxCocoa/RxCocoa.framework",
+				"${BUILT_PRODUCTS_DIR}/RxSwift/RxSwift.framework",
+				"${BUILT_PRODUCTS_DIR}/Nimble/Nimble.framework",
+				"${BUILT_PRODUCTS_DIR}/RxBlocking/RxBlocking.framework",
+				"${BUILT_PRODUCTS_DIR}/RxNimble/RxNimble.framework",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxCocoa.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxSwift.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Nimble.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxBlocking.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxNimble.framework",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-RxSwiftPracticeTests/Pods-RxSwiftPracticeTests-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -355,6 +397,7 @@
 				E613CCFE226DCB2500B31752 /* UIScrollView+Rx.swift in Sources */,
 				E67A8151225DC97F00801D92 /* AppDelegate.swift in Sources */,
 				E613CCFB226DC89C00B31752 /* PlaylistSongsViewController.swift in Sources */,
+				E6BA906122735DA300DCA325 /* APIEngineActionsProtocol.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -554,7 +597,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 89AB7D2F52554C9F68632F7B /* Pods-RxSwiftPracticeTests.debug.xcconfig */;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = "$(inherited)";
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 9MSX2BCKGP;
@@ -576,7 +619,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 0F065AEC6F75D5E81E751FEB /* Pods-RxSwiftPracticeTests.release.xcconfig */;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = "$(inherited)";
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 9MSX2BCKGP;
