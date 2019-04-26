@@ -12,7 +12,7 @@ import RxCocoa
 
 class SimpleRxViewModel {
     private let bag = DisposeBag()
-    private let api = APIEngine.shared
+    private let api: APIEngineActionsProtocol
     private(set) var page = 0
     private(set) var hasMore = false
     
@@ -23,8 +23,8 @@ class SimpleRxViewModel {
     let loggedIn = BehaviorRelay<Bool>(value: false)
     let loading = BehaviorRelay<Bool>(value: false)
     
-    init() {
-        
+    init(apiProvidier: APIEngineActionsProtocol = APIEngine.shared) {
+        api = apiProvidier
         let authorizedRequest = Observable.combineLatest(loading.asObservable(), loggedIn.asObservable())
             .sample(authorizedTrigger)
             .filter { isLoading, isLoggedIn in
@@ -78,7 +78,6 @@ class SimpleRxViewModel {
             playlistRequest.map { _ in true },
             playlistResponse.map{ _ in false },
             authorizedResponse.map { _ in false })
-            .share(replay: 1)
             .bind(to: loading)
             .disposed(by: bag)
     }

@@ -44,7 +44,7 @@ class APIEngine: NSObject {
     }
 }
 
-extension APIEngine {
+extension APIEngine: APIEngineActionsProtocol {
     
     private func request(URLString: String) -> URLRequest {
         var request = URLRequest(url: URL(string: URLString)!)
