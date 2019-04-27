@@ -22,6 +22,11 @@
 		E67A8171225DD0E400801D92 /* APIEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = E67A8170225DD0E400801D92 /* APIEngine.swift */; };
 		E67A8173225DE54300801D92 /* KKBOX.swift in Sources */ = {isa = PBXBuildFile; fileRef = E67A8172225DE54300801D92 /* KKBOX.swift */; };
 		E6BA906122735DA300DCA325 /* APIEngineActionsProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6BA906022735DA300DCA325 /* APIEngineActionsProtocol.swift */; };
+		E6BFC4EA2274B2E600F02A13 /* SimpleRxViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E613CCF8226D988B00B31752 /* SimpleRxViewModel.swift */; };
+		E6BFC4EB2274B2F300F02A13 /* PlaylistSongViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6EF7559226E0CEA009198E7 /* PlaylistSongViewModel.swift */; };
+		E6BFC4EC2274B2FA00F02A13 /* PlaylistSongViewModelInputs.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6EF755B226E1703009198E7 /* PlaylistSongViewModelInputs.swift */; };
+		E6BFC4ED2274B2FD00F02A13 /* APIEngineActionsProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6BA906022735DA300DCA325 /* APIEngineActionsProtocol.swift */; };
+		E6BFC4EE2274B30900F02A13 /* KKBOX.swift in Sources */ = {isa = PBXBuildFile; fileRef = E67A8172225DE54300801D92 /* KKBOX.swift */; };
 		E6EF755A226E0CEA009198E7 /* PlaylistSongViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6EF7559226E0CEA009198E7 /* PlaylistSongViewModel.swift */; };
 		E6EF755C226E1703009198E7 /* PlaylistSongViewModelInputs.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6EF755B226E1703009198E7 /* PlaylistSongViewModelInputs.swift */; };
 /* End PBXBuildFile section */
@@ -236,7 +241,6 @@
 					};
 					E67A8160225DC98100801D92 = {
 						CreatedOnToolsVersion = 10.2;
-						TestTargetID = E67A814C225DC97F00801D92;
 					};
 				};
 			};
@@ -405,7 +409,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E6BFC4ED2274B2FD00F02A13 /* APIEngineActionsProtocol.swift in Sources */,
+				E6BFC4EC2274B2FA00F02A13 /* PlaylistSongViewModelInputs.swift in Sources */,
+				E6BFC4EA2274B2E600F02A13 /* SimpleRxViewModel.swift in Sources */,
+				E6BFC4EB2274B2F300F02A13 /* PlaylistSongViewModel.swift in Sources */,
 				E67A8166225DC98100801D92 /* RxSwiftPracticeTests.swift in Sources */,
+				E6BFC4EE2274B30900F02A13 /* KKBOX.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -598,7 +607,6 @@
 			baseConfigurationReference = 89AB7D2F52554C9F68632F7B /* Pods-RxSwiftPracticeTests.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = "$(inherited)";
-				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 9MSX2BCKGP;
 				INFOPLIST_FILE = RxSwiftPracticeTests/Info.plist;
@@ -611,7 +619,6 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/RxSwiftPractice.app/RxSwiftPractice";
 			};
 			name = Debug;
 		};
@@ -620,7 +627,6 @@
 			baseConfigurationReference = 0F065AEC6F75D5E81E751FEB /* Pods-RxSwiftPracticeTests.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = "$(inherited)";
-				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 9MSX2BCKGP;
 				INFOPLIST_FILE = RxSwiftPracticeTests/Info.plist;
@@ -633,7 +639,6 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/RxSwiftPractice.app/RxSwiftPractice";
 			};
 			name = Release;
 		};

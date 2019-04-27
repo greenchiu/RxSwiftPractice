@@ -10,10 +10,6 @@ import Foundation
 import RxSwift
 import RxCocoa
 
-enum APIEngineError: Error {
-    case invalidResponse
-}
-
 private extension KKBOX {
     static let clientSecret = "e3eea435b0e83489972cc29d4e2f95cd"
     static let clientId = "3362d93392c8160469538817b46545c0"

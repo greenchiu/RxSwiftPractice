@@ -14,7 +14,7 @@ import SnapKit
 class ViewController: UIViewController {
 
     let bag = DisposeBag()
-    let viewModel = SimpleRxViewModel()
+    let viewModel = SimpleRxViewModel(apiProvidier: APIEngine.shared)
     var authrorizedRequest: Observable<Never>!
     let authorizedButton = UIButton(type: .custom)
     let fetchPlaylistButton = UIButton(type: .custom)
@@ -99,7 +99,7 @@ class ViewController: UIViewController {
         Observable.zip(tableview.rx.itemSelected, tableview.rx.modelSelected(Playlist.self))
             .bind { [weak self] indexPath, item in
                 let vc = PlaylistSongsViewController()
-                vc.viewModel = PlaylistSongViewModel(playlistIdentifier: item.identifier)
+                vc.viewModel = PlaylistSongViewModel(playlistIdentifier: item.identifier, apiProvider: APIEngine.shared)
                 vc.title = item.title
                 self?.navigationController?.pushViewController(vc, animated: true)
             }

@@ -23,7 +23,7 @@ class SimpleRxViewModel {
     let loggedIn = BehaviorRelay<Bool>(value: false)
     let loading = BehaviorRelay<Bool>(value: false)
     
-    init(apiProvidier: APIEngineActionsProtocol = APIEngine.shared) {
+    init(apiProvidier: APIEngineActionsProtocol) {
         api = apiProvidier
         let authorizedRequest = Observable.combineLatest(loading.asObservable(), loggedIn.asObservable())
             .sample(authorizedTrigger)

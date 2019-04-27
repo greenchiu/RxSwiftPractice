@@ -9,6 +9,10 @@
 import Foundation
 import RxSwift
 
+enum APIEngineError: Error {
+    case invalidResponse
+}
+
 protocol APIEngineActionsProtocol {
     func authorizeKKBOX() -> Completable
     func fetchFeaturedPlaylist(page: Int) -> Single<([Playlist], Bool)>

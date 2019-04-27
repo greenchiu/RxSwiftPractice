@@ -13,7 +13,7 @@ import RxCocoa
 
 
 class PlaylistSongViewModel: PlaylistSongViewModelProtocols {
-    private let apiProvider = APIEngine.shared
+    private let apiProvider: APIEngineActionsProtocol
     private var page: Int = 0
     private let bag = DisposeBag()
     
@@ -22,8 +22,8 @@ class PlaylistSongViewModel: PlaylistSongViewModelProtocols {
     let trigger = PublishSubject<Void>()
     let error = BehaviorRelay<String>(value: "")
     
-    init(playlistIdentifier: String) {
-        
+    init(playlistIdentifier: String, apiProvider: APIEngineActionsProtocol) {
+        self.apiProvider = apiProvider
         let requests = request(subject: trigger)
                         .share(replay: 1)
         
