@@ -14,6 +14,7 @@ enum APIEngineError: Error {
 }
 
 protocol APIEngineActionsProtocol {
+    var loggedin: Bool { get }
     func authorizeKKBOX() -> Completable
     func fetchFeaturedPlaylist(page: Int) -> Single<([Playlist], Bool)>
     func fetchFeaturedPlaylistTracks(with identifier: String) -> Single<[Song]> 

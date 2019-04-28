@@ -26,7 +26,7 @@ struct KKBOX: Codable {
     }
 }
 
-struct ImageMetadata: Codable {
+struct ImageMetadata: Codable, Equatable {
     var height: Int
     var width: Int
     var url: String
@@ -62,7 +62,7 @@ struct Album: Codable {
     }
 }
 
-struct Playlist: Codable {
+struct Playlist: Codable, Equatable {
     var identifier: String
     var title: String
     var images: [ImageMetadata]

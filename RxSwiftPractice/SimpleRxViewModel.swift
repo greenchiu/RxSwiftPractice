@@ -82,10 +82,6 @@ class SimpleRxViewModel {
             .disposed(by: bag)
     }
     
-    private func authorize() -> Completable {
-        return api.authorizeKKBOX()
-    }
-    
     private func fetchPlaylistRequest() -> Observable<Int> {
         return loading
             .asObservable()

@@ -23,4 +23,5 @@ target 'RxSwiftPracticeTests' do
     inherit! :search_paths
     base_pods
     pod "RxNimble"
+    pod "RxTest"
 end
