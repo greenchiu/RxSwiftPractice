@@ -15,7 +15,7 @@ target 'RxSwiftPractice' do
   # Pods for RxSwiftPractice
   # inherit! :search_paths
   base_pods
-  pod 'SnapKit'
+  pod 'SnapKit', '~> 5.0.0'
 end
 
 

@@ -23,14 +23,6 @@ class RxSwiftPracticeTests: XCTestCase {
         bag = DisposeBag()
     }
     
-    func test() {
-        let viewModel = SimpleRxViewModel(apiProvidier: self.dummyAPIProvider())
-        expect(viewModel.loggedIn).first == false
-        viewModel.loggedIn.accept(true)
-        viewModel.loadPlaylistTrigger.onNext(())
-//        expect(viewModel.playlists).toEventually(BehaviorRelay<[Playlist]>(value: self.dummyPlaylist()), timeout: 0, pollInterval: 0, description: nil)
-    }
-    
     func testSimpleRxViewModel() {
         let viewModel = SimpleRxViewModel(apiProvidier: self.dummyAPIProvider())
         expect(viewModel.loggedIn).first == false
@@ -105,12 +97,16 @@ class RxSwiftPracticeTests: XCTestCase {
             .disposed(by: bag)
         testScheduler.start()
         
-        waitForExpectations(timeout: 10, handler: { _ in
-            let elements = viewModel.playlists.value
-            XCTAssertEqual(elements,
-                           [Playlist(identifier: "1", title: "1", images: [] as [ImageMetadata]),
-                            Playlist(identifier: "1", title: "1", images: [] as [ImageMetadata])])
+        waitForExpectations(timeout: 10, handler: { error in
+            if let error = error {
+                print("error: \(error)")
+            }
         })
+        
+        let elements = viewModel.playlists.value
+        XCTAssertEqual(elements,
+                       [Playlist(identifier: "1", title: "1", images: [] as [ImageMetadata]),
+                        Playlist(identifier: "1", title: "1", images: [] as [ImageMetadata])])
     }
 }
 
@@ -124,16 +120,33 @@ extension RxSwiftPracticeTests {
     
     func dummySongs() -> [Song] {
         return [
-            Song(identifier: "1", name: "1", duration: 1, url: "1", album: Album(identifier: "1", name: "1", url: "1", images: [], artist: Artist(identifier: "1", name: "1", url: "1", images: []))),
-            Song(identifier: "2", name: "2", duration: 2, url: "2", album: Album(identifier: "2", name: "2", url: "2", images: [], artist: Artist(identifier: "2", name: "2", url: "2", images: [])))
+            .expectationSong(dummyIdentifier: 1),
+            .expectationSong(dummyIdentifier: 2)
         ]
     }
     
     func dummyPlaylist() -> [Playlist] {
-        return [Playlist(identifier: "1", title: "1", images: [])]
+        return [.expectation]
     }
 }
 
+extension Playlist {
+    static var expectation: Playlist {
+        return Playlist(identifier: "1", title: "1", images: [])
+    }
+}
+
+extension Song {
+    static func expectationSong(dummyIdentifier: Int) -> Song {
+        let dummyData = "\(dummyIdentifier)"
+        return Song(identifier: dummyData,
+                    name: dummyData,
+                    duration: 1,
+                    url: dummyData,
+                    album: Album(identifier: dummyData, name: dummyData, url: dummyData, images: [],
+                                 artist: Artist(identifier: dummyData, name: dummyData, url: dummyData, images: [])))
+    }
+}
 
 internal class APIProvider: APIEngineActionsProtocol {
     private(set) var loggedin = false
